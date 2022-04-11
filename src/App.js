@@ -1,25 +1,36 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [count, setCount] = useState(0);
+
+  const handleIncrementCount = () => {
+    setCount(count + 1);
+  };
+
+  const handleResetCount = () => {
+    setCount(0)
+  }
+
+  useEffect(() => {
+    const data = localStorage.getItem('click-count');
+
+    setCount(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('click-count', JSON.stringify(count));
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app'>
+      <div className='app__container'>
+        <p>your count is: {count}</p>
+        <button onClick={handleIncrementCount}>click me!</button>
+        <button onClick={handleResetCount}>reset count</button>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
