@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useLocalStorage } from './hooks/useLocalStorage';
 import './App.css';
 
 const App = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useLocalStorage(0, 'click-count');
 
   const handleIncrementCount = () => {
     setCount(count + 1);
@@ -11,16 +11,6 @@ const App = () => {
   const handleResetCount = () => {
     setCount(0)
   }
-
-  useEffect(() => {
-    const data = localStorage.getItem('click-count');
-
-    setCount(JSON.parse(data));
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('click-count', JSON.stringify(count));
-  });
 
   return (
     <div className='app'>
